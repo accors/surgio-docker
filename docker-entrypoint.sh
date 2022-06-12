@@ -30,7 +30,7 @@ cloneRepo() {
 }
 
 ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts
-cloneRepo surgio git@github.com:accors/surgio-conf.git "$targetBranch"
+cloneRepo surgio "$REPO_URL" "$targetBranch"
 
 cp -f ./docker-entrypoint.sh /usr/local/bin
 cp -f ./id-rsa-example /root/.ssh/id_rsa
