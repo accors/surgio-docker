@@ -1,0 +1,2 @@
+#在此处填写你的SURGIO自定义环境变量
+export SURGIO_NETWORK_TIMEOUT="15000"

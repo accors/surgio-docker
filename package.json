@@ -1,0 +1,15 @@
+{
+  "name": "surgio-docker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "update": "surgio generate && surgio upload"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@surgio/gateway": "^1.6.5",
+    "surgio": "^2.18.4"
+  }
+}
