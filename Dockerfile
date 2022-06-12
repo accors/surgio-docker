@@ -1,11 +1,11 @@
-FROM node:current-alpine
+FROM alpine:latest
 LABEL AUTHOR="accors" \
       VERSION=1.0
 ENV PATH=/usr/local/bin:$PATH LANG=C.UTF-8
 RUN set -ex \
         && apk update -f \
         && apk upgrade \
-        && apk add --no-cache bash tzdata git moreutils curl jq openssh-client \
+        && apk add --no-cache bash tzdata git moreutils curl jq openssh-client npm \
         && rm -rf /var/cache/apk/* \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && echo "Asia/Shanghai" > /etc/timezone \
