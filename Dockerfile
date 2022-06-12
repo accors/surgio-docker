@@ -9,7 +9,7 @@ RUN set -ex \
         && rm -rf /var/cache/apk/* \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && echo "Asia/Shanghai" > /etc/timezone \
-        && npm install --location=global pm2@latest \
+        && npm install -g pm2@latest \
         && npm config set registry https://registry.npmmirror.com \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
