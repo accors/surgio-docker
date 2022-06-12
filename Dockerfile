@@ -14,7 +14,8 @@ RUN set -ex \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
 RUN set -ex \
+        chmod +x /usr/local/bin/docker-entrypoint.sh \
         chmod 600 /root/.ssh/id_rsa
 WORKDIR /surgio
 CMD ["master"]
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
