@@ -32,9 +32,6 @@ cloneRepo() {
 ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts
 cloneRepo surgio "$REPO_URL" "$targetBranch"
 
-cp -f ./docker-entrypoint.sh /usr/local/bin
-cp -f ./id-rsa-example /root/.ssh/id_rsa
-
 npm config delete registry
 npm config set registry https://registry.npmmirror.com
 npm install
