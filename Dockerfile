@@ -5,7 +5,7 @@ ENV PATH=/usr/local/bin:$PATH LANG=C.UTF-8
 RUN set -ex \
         && apk update -f \
         && apk upgrade \
-        && apk add --no-cache bash tzdata git moreutils curl jq openssh-client npm \
+        && apk add --no-cache bash tzdata git moreutils curl jq openssh-client openrc npm \
         && rm -rf /var/cache/apk/* \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && echo "Asia/Shanghai" > /etc/timezone \
