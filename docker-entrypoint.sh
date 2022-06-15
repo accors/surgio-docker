@@ -16,12 +16,12 @@ cloneRepo() {
     repoUrl=$2
     branchName=$3
     if [ ! -d "/${repoName}/.git" ]; then
-        echo "█未检查到${repoName}仓库，clone..."
+        echo "未检查到${repoName}仓库，clone..."
         git clone "${repoUrl}" /"${repoName}"
         git -C "/${repoName}" fetch --all
         git -C "/${repoName}" checkout "${branchName}"
     else
-        echo "█更新${repoName}仓库..."
+        echo "更新${repoName}仓库..."
         git -C "/${repoName}" fetch --all
         git -C "/${repoName}" checkout "${branchName}"
         git -C "/${repoName}" reset --hard origin/"${branchName}"
@@ -36,5 +36,6 @@ npm config delete registry
 npm config set registry https://registry.npmmirror.com
 npm install
 
-sh /opt/shell/start.sh >/dev/null
-break
+source /opt/shell/env.sh && pm2 start /surgio/gateway.js --name "gateway"
+pm2 save && pm2 startup &>/dev/null
+exit 0
