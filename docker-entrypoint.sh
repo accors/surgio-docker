@@ -20,12 +20,14 @@ cloneRepo() {
         git clone "${repoUrl}" /"${repoName}"
         git -C "/${repoName}" fetch --all
         git -C "/${repoName}" checkout "${branchName}"
+        exit 0
     else
         echo "更新${repoName}仓库..."
         git -C "/${repoName}" fetch --all
         git -C "/${repoName}" checkout "${branchName}"
         git -C "/${repoName}" reset --hard origin/"${branchName}"
         git -C "/${repoName}" pull origin "${branchName}" --rebase
+        exit 0
     fi
 }
 
@@ -38,4 +40,4 @@ npm install
 
 source /opt/shell/env.sh && pm2 start /surgio/gateway.js --name "gateway"
 pm2 save && pm2 startup &>/dev/null
-exit 0
+return 0
