@@ -19,5 +19,4 @@ RUN set -ex \
         ln -sf /opt/shell/env.sh /surgio/env.sh \
         chmod 600 /root/.ssh/id_rsa 
 WORKDIR /surgio
-CMD ["master"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
