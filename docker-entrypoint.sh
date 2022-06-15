@@ -40,4 +40,5 @@ npm install
 
 source /opt/shell/env.sh && pm2 start /surgio/gateway.js --name "gateway"
 pm2 save && pm2 startup &>/dev/null
-return 0
+
+exec "$@"
