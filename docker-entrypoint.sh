@@ -37,4 +37,4 @@ npm config set registry https://registry.npmmirror.com
 npm install
 
 sh /opt/shell/start.sh >/dev/null
-exec "$@"
+break
