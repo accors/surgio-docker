@@ -13,7 +13,7 @@ RUN set -ex \
         && npm config set registry https://registry.npmmirror.com \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
-CPOY ./shell /opt/shell
+COPY ./shell /opt/shell
 RUN set -ex \
         chmod +x /usr/local/bin/docker-entrypoint.sh \
         chmod 600 /root/.ssh/id_rsa
