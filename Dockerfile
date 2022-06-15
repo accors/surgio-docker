@@ -16,7 +16,8 @@ COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./shell /opt/shell
 RUN set -ex \
         chmod +x /usr/local/bin/docker-entrypoint.sh \
-        chmod 600 /root/.ssh/id_rsa
+        ln -sf /opt/shell/env.sh /surgio/env.sh \
+        chmod 600 /root/.ssh/id_rsa 
 WORKDIR /surgio
 CMD ["master"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
