@@ -14,7 +14,6 @@ RUN set -ex \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./shell /opt/shell
-COPY ./gw.js /opt
 RUN set -ex \
         chmod +x /usr/local/bin/docker-entrypoint.sh \
         ln -sf /opt/shell/env.sh /surgio/env.sh \
