@@ -37,5 +37,4 @@ cloneRepo surgio "$REPO_URL" "$targetBranch"
 npm config delete registry
 npm config set registry https://registry.npmmirror.com
 npm install
-pm2 start /surgio/gateway.js && pm2 save && pm2 startup &>/dev/null
-node /surgio/gw.js
+node /surgio/gateway.js
