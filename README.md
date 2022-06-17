@@ -6,7 +6,7 @@
 - 浏览[Surgio官方文档-快速搭建托管API](https://surgio.js.org/guide/advance/api-gateway.html#%E8%87%AA%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2)了解准备方法，并按教程准备好配置文件。
 
 - 若自己不会准备，则可下载本库中的示例gateway.js（https://raw.githubusercontent.com/accors/surgio-docker/main/gateway.js）
-- 并将该gateway.js并放入你的Surgio文件夹根目录。
+- 将该gateway.js放入你的Surgio文件夹根目录。
 
 - 安装Docker与Docker-Compose。可使用curl -fsSL https://get.docker.com | bash -s docker 一键安装，运行完成后自行安装docker-compose-plugin即可完成Docker-Compose安装。
 
