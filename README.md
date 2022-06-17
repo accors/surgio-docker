@@ -25,7 +25,7 @@ services:
     container_name: surgio-docker
     restart: unless-stopped
     environment:
-      - REPO_URL=Git存储库链接（示例：git@github.com）
+      - REPO_URL=Git存储库链接（示例：git@github.com:用户名/仓库名称.git）
       - REPO-DOMAIN=存储库使用的域名（示例：github.com）
       - REPO-BRANCH=存储库的分支名称（示例：main）
       - KEY=存储库转义后的私钥
