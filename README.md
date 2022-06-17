@@ -20,7 +20,7 @@
 ``` yaml
 version: '3.7'
 services:
-  elecv2p:
+  surgio:
     image: accors/surgio:latest
     container_name: surgio-docker
     restart: unless-stopped
