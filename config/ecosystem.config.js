@@ -1,10 +1,12 @@
 module.exports = {
-    apps: [{
-        name: "Gateway",
-        version: "1.0.0",
-        cwd: "/surgio",
-        script: "gateway.js",
-        autorestart: true,
-        watch: ["Gateway"],
-    }]
-}
+    apps: [
+      {
+        name: "surgio",
+        cwd: "./",
+        script: 'gateway.js',
+        args: "",
+        watch: true,
+        watch_delay: 1000
+      }
+    ]
+  }
