@@ -1,1 +1,0 @@
-source /opt/config/env.sh && pm2-runtime start /opt/config/ecosystem.config.js --env production
