@@ -6,6 +6,6 @@ module.exports = {
         script: "gateway.js",
         autorestart: true,
         watch: true,
-       watch_delay: 1000
+        watch_delay: 1000
     }]
 }
