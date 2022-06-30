@@ -11,6 +11,7 @@ RUN set -ex \
         && echo "Asia/Shanghai" > /etc/timezone \
         && npm install -g pm2@latest \
         && npm config set registry https://registry.npmmirror.com \
+        && echo -e "0 0 * * * git -C /surgio fetch --all && pm2 restart Gateway" > /var/spool/cron/crontabs/root \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./config /opt/config
