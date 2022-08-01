@@ -11,8 +11,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 0 */15 * 5
-  watch:
-    types: [started]
+  #watch:
+    #types: [started]
 
 jobs:
   build:
