@@ -10,7 +10,6 @@ RUN set -ex \
         && apk update -f \
         && apk upgrade \
         && mkdir -p /root/.ssh \
-        && chmod 600 /root/.ssh/id_rsa \
         && apk add --no-cache bash tzdata git moreutils curl jq openssh-client openrc npm \
         && rm -rf /var/cache/apk/* \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
