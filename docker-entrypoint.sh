@@ -34,8 +34,6 @@ cloneRepo() {
 ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts
 cloneRepo surgio "$REPO_URL" "$targetBranch"
 
-npm config delete registry
-npm config set registry https://registry.npmmirror.com
 npm install
 cp /root/ecosystem.config.js /surgio/ecosystem.config.js
 source /opt/config/env.sh && pm2-runtime start ecosystem.config.js --env production
