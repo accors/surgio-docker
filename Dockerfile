@@ -1,7 +1,8 @@
 FROM alpine:latest
 LABEL AUTHOR="accors" \
-      VERSION=1.0
-ENV PATH=/usr/local/bin:$PATH LANG=C.UTF-8
+      VERSION=1.5
+ENV PATH=/usr/local/bin:$PATH LANG=C.UTF-8 \
+    DEFAULT_CRON="0 0 * * *"
 RUN set -ex \
         && apk update -f \
         && apk upgrade \
@@ -11,7 +12,7 @@ RUN set -ex \
         && echo "Asia/Shanghai" > /etc/timezone \
         && npm install -g pm2@latest \
         && npm config set registry https://registry.npmmirror.com \
-        && echo -e "0 0 * * * git -C /surgio pull origin && pm2 restart Gateway" > /var/spool/cron/crontabs/root \
+        && echo -e "$DEFAULT_CRON /opt/config/update.sh" > /var/spool/cron/crontabs/root \
         && mkdir -p /root/.ssh 
 COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./config /opt/config
