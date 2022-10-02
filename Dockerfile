@@ -17,9 +17,7 @@ RUN set -ex \
         && chmod +x /opt/config/* \
         && npm install -g pm2@latest \
         && npm config set registry https://registry.npmmirror.com \
-        && touch /surgio/env.sh \
         && echo -e "$DEFAULT_CRON /opt/config/update.sh" > /var/spool/cron/crontabs/root \
-        && chmod +x /usr/local/bin/docker-entrypoint.sh \
-        && ln -sf /opt/config/env.sh /surgio/env.sh  
+        && chmod +x /usr/local/bin/docker-entrypoint.sh 
 WORKDIR /surgio
 ENTRYPOINT ["docker-entrypoint.sh"]
