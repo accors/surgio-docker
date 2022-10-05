@@ -19,5 +19,5 @@ echo "仓库拉取成功，安装依赖中..."
 cd Sub-Store-Front-End && pnpm install
 cd .. && cd Sub-Store/backend && pnpm install
 echo "依赖安装完成，启动后端与面板..."
-pm2-runtime start /app/Sub-Store/backend/sub-store.min.js
-cd /app && cd Sub-Store-Front-End && pnpm dev
+pm2 start /app/Sub-Store/backend/sub-store.min.js
+cd /app/Sub-Store-Front-End && pnpm dev
