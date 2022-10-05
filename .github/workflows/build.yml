@@ -1,0 +1,33 @@
+name: Build surgio image and publish to dockerhub
+
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 */15 * 5
+  #watch:
+    #types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: 构建镜像
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: Build and publish image
+        uses: ilteoood/docker_buildx@master
+        with:
+          publish: true
+          imageName: accors/sub-store
+          dockerFile: ./Sub.dockerfile
+          platform: linux/amd64,linux/arm64/v8
+          tag: latest
+          dockerUser: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
