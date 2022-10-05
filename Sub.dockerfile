@@ -1,6 +1,6 @@
 FROM alpine:latest
 WORKDIR /app
-COPY entrypoint.sh /app
+COPY ./entrypoint.sh /app
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && echo "========= 安装软件，设置时区 =========" \
     && apk update -f \
