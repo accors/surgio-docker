@@ -1,4 +1,4 @@
-name: Build surgio image and publish to dockerhub
+name: Build sub-store image and publish to dockerhub
 
 on: 
   release:
