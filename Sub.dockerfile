@@ -8,7 +8,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && apk --no-cache add -f nodejs npm bash tzdata git \
     && npm config set registry https://registry.npmmirror.com \
     && npm install npm pnpm pm2 -g \
-    && pnpm setup \
     && pm2 install pm2-logrotate \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
