@@ -5,7 +5,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && echo "========= 安装软件，设置时区 =========" \
     && apk update -f \
     && apk upgrade \
-    && apk --no-cache add -f nodejs bash tzdata git \
+    && apk --no-cache add -f nodejs npm bash tzdata git \
     && npm config set registry https://registry.npmmirror.com \
     && npm install npm pnpm pm2 -g \
     && pnpm setup \
