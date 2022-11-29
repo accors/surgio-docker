@@ -20,4 +20,4 @@ cd Sub-Store/backend && pnpm i
 cd .. && cd Sub-Store-Front-End && sed -i 's/192.168.1.19/127.0.0.1/g' .env.development && pnpm i
 echo "依赖安装完成，启动后端与面板..."
 cd /app/Sub-Store && pm2 start "npm run serve" --name sub-store-backend
-cd /app/Sub-Store-Front-End && pm2 start "npm run dev" --name sub-store-frontend
+cd /app/Sub-Store-Front-End && pm2-runtime start "npm run dev" --name sub-store-frontend
