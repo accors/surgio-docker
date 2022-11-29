@@ -20,4 +20,5 @@ cd Sub-Store-Front-End && pnpm install
 cd .. && cd Sub-Store/backend && pnpm install
 echo "依赖安装完成，启动后端与面板..."
 pm2 start /app/Sub-Store/backend/sub-store.min.js
-cd /app/Sub-Store-Front-End && pnpm dev
+cd /app/Sub-Store-Front-End 
+sed -i 's/192.168.1.19/127.0.0.1/g' .env.development && pnpm dev
