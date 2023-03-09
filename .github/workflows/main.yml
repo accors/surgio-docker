@@ -4,15 +4,16 @@ on:
   release:
     types: [published]
   push:
-    tags:
-    - 'v*'
-  #  branches: 
-  #    - master
+    branches:
+      - main
+    paths:
+      - Dockerfile
+      - docker-entrypoint.sh
+      - .github/workflows/main.yml
+      - requirements.txt
   workflow_dispatch:
   schedule:
     - cron: 0 0 */15 * 5
-  #watch:
-    #types: [started]
 
 jobs:
   build:
