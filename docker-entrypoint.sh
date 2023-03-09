@@ -16,7 +16,7 @@ cloneRepo() {
     repoUrl=$2
     branchName=$3
     if [ ! -d "/${repoName}/.git" ]; then
-        echo "未检查到${repoName}仓库，clone..."
+        echo "未检查到${repoName}仓库，拉取中..."
         git clone "${repoUrl}" /"${repoName}"
         git -C "/${repoName}" fetch --all
         git -C "/${repoName}" checkout "${branchName}"
@@ -35,6 +35,9 @@ ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts
 cloneRepo surgio "$REPO_URL" "$targetBranch"
 
 crond
-npm install
+if [[ -f /surgio/diy.sh ]]; then
+        . /surgio/diy.sh
+fi
+pnpm install
 cp /root/ecosystem.config.js /surgio/ecosystem.config.js
 source /opt/config/env.sh && pm2-runtime start ecosystem.config.js --env production
