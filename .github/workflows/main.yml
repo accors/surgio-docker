@@ -18,18 +18,36 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: 构建镜像
+    name: Build Docker Image
     steps:
-      - name: Checkout master
+      -
+        name: Checkout
         uses: actions/checkout@master
-        
-      - name: Build and publish image
-        uses: ilteoood/docker_buildx@master
+
+      -
+        name: Set Up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      -
+        name: Set Up Buildx
+        uses: docker/setup-buildx-action@v1
+
+      -
+        name: Login DockerHub
+        uses: docker/login-action@v1
         with:
-          publish: true
-          imageName: accors/surgio
-          dockerFile: ./Dockerfile
-          platform: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6,linux/ppc64le,linux/s390x
-          tag: latest
-          dockerUser: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: |
+            linux/amd64
+            linux/arm64/v8
+            linux/arm/v7
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:latest
