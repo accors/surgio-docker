@@ -40,4 +40,4 @@ if [[ -f /surgio/diy.sh ]]; then
 fi
 pnpm install
 cp /root/ecosystem.config.js /surgio/ecosystem.config.js
-source /opt/config/env.sh && pm2-runtime start ecosystem.config.js --env production
+source /root/env.sh && pm2-runtime start ecosystem.config.js --env production
