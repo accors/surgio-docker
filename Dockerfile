@@ -1,6 +1,6 @@
 FROM node:alpine
 LABEL AUTHOR="accors" \
-      VERSION=2.0
+      VERSION=2.1
 ENV PATH=/usr/local/bin:$PATH LANG=C.UTF-8 \
     DEFAULT_CRON="0 0 * * *"
 COPY ./docker-entrypoint.sh /usr/local/bin
@@ -9,7 +9,7 @@ COPY ./ecosystem.config.js /root/ecosystem.config.js
 RUN set -ex \
         && apk update -f \
         && mkdir -p /root/.ssh \
-        && apk add --no-cache bash tzdata git moreutils curl jq \
+        && apk add --no-cache bash tzdata git moreutils curl jq openssh-client \
         && rm -rf /var/cache/apk/* \
         && echo "Asia/Shanghai" > /etc/timezone \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
