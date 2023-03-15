@@ -29,7 +29,7 @@ jobs:
           publish: true
           imageName: accors/surgio
           dockerFile: ./Dockerfile
-          platform: linux/amd64,linux/arm64/v8
+          platform: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6,linux/ppc64le,linux/s390x
           tag: latest
           dockerUser: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
