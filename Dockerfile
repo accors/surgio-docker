@@ -14,6 +14,7 @@ RUN set -ex \
         && apk add --no-cache bash tzdata git moreutils curl jq openssh-client \
         && echo "Asia/Shanghai" > /etc/timezone \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+        && pnpm setup \
         && pnpm add -g pm2 \
         && npm config set registry https://registry.npmmirror.com \
         && rm -rf /var/cache/apk/* \
