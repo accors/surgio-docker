@@ -2,7 +2,7 @@ FROM node:alpine
 LABEL AUTHOR="accors" \
       VERSION=2.4
 ENV PNPM_HOME="/root/.local/share/pnpm" \
-    PATH="${PATH}:/usr/local/bin:${PNPM_HOME}" \
+    PATH="${PATH}:${PNPM_HOME}" \
     LANG=C.UTF-8 \
     DEFAULT_CRON="0 0 * * *"
 COPY ./docker-entrypoint.sh /usr/local/bin
