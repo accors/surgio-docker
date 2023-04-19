@@ -1,8 +1,8 @@
 FROM node:alpine
 LABEL AUTHOR="accors" \
-      VERSION=2.4
-ENV PNPM_HOME="/root/.local/share/pnpm" \
-    PATH="/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PNPM_HOME}" \
+      VERSION=2.5
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm" \
+    PNPM_HOME="/root/.local/share/pnpm" \
     LANG=C.UTF-8 \
     DEFAULT_CRON="0 0 * * *"
 COPY ./docker-entrypoint.sh /usr/local/bin
