@@ -33,7 +33,7 @@ cloneRepo() {
 
 ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts
 cloneRepo surgio "$REPO_URL" "$targetBranch"
-
+pnpm config set registry ${PNPM_SOURCE}
 crond
 if [[ -f /surgio/diy.sh ]]; then
         . /surgio/diy.sh

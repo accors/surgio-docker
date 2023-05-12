@@ -15,6 +15,8 @@
   
 - 将自己的Surgio文件夹上传至私有Git存储库，并获取私钥（OPENSSH PRIVATE KEY开头）并自行转义换行以备用。
 
+- 若需要运行自定义命令，可在私有存储库中创建diy.sh脚本，并赋予可执行权限。启动时会自动检测，若脚本存在则运行。
+
 - 配置Docker-Compose配置文件，下附示例
 
 ``` yaml
@@ -26,6 +28,7 @@ services:
     restart: unless-stopped
     environment:
       - REPO_URL=Git存储库链接（示例：git@github.com:用户名/仓库名称.git）
+      - PNPM_SOURCE=安装依赖时使用的PNPM源，默认设置为npmjs官方源，可自定义
       - REPO-DOMAIN=存储库使用的域名（示例：github.com）
       - REPO-BRANCH=存储库的分支名称（示例：main）
       - KEY=存储库转义后的私钥
