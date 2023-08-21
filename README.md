@@ -29,8 +29,8 @@ services:
     environment:
       - REPO_URL=Git存储库链接（示例：git@github.com:用户名/仓库名称.git）
       - PNPM_SOURCE=安装依赖时使用的PNPM源，默认设置为npmjs官方源，可自定义
-      - REPO-DOMAIN=存储库使用的域名（示例：github.com）
-      - REPO-BRANCH=存储库的分支名称（示例：main）
+      - REPO_DOMAIN=存储库使用的域名（示例：github.com）
+      - REPO_BRANCH=存储库的分支名称（示例：main）
       - KEY=存储库转义后的私钥
     ports:
       - "3000:3000" #默认gateway指定内部监听端口3000，若需修改则自己修改Surgio配置仓库中的gateway.js，并修改：后的端口号。
