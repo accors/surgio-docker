@@ -1,6 +1,6 @@
 FROM node:alpine
 LABEL AUTHOR="accors" \
-      VERSION=2.6
+      VERSION=3.0
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm" \
     PNPM_HOME="/root/.local/share/pnpm" \
     PNPM_SOURCE="https://registry.npmjs.org" \
@@ -22,4 +22,4 @@ RUN set -ex \
         && echo -e "$DEFAULT_CRON update" > /var/spool/cron/crontabs/root \
         && chmod +x /usr/local/bin/* 
 WORKDIR /surgio
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD docker-entrypoint.sh
