@@ -1,7 +1,7 @@
 FROM node:22-alpine
 LABEL AUTHOR="accors" \
       VERSION=3.0
-ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm" \
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm:/root/.local/share/pnpm/bin" \
     PNPM_HOME="/root/.local/share/pnpm" \
     PNPM_SOURCE="https://registry.npmjs.org" \
     LANG=C.UTF-8 \
