@@ -2,14 +2,18 @@
   "name": "surgio-docker",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.10.0",
   "scripts": {
     "update": "surgio generate && surgio upload"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "dependencies": {
-    "@surgio/gateway": "^1.6.5",
-    "surgio": "^2.18.4"
+    "@surgio/gateway": "^2.3.1",
+    "surgio": "^3.16.0"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
   }
 }

@@ -12,6 +12,8 @@
 
 - 拉取Docker镜像：accors/surgio:latest 
   - 懒人命令：docker pull accors/surgio:latest
+
+- 当前镜像基于 Node.js 22 Alpine 构建，并通过 Corepack 使用 pnpm 11.10.0 安装依赖。
   
 - 将自己的Surgio文件夹上传至私有Git存储库，并获取私钥（OPENSSH PRIVATE KEY开头）并自行转义换行以备用。
 
@@ -28,12 +30,14 @@ services:
     restart: unless-stopped
     environment:
       - REPO_URL=Git存储库链接（示例：git@github.com:用户名/仓库名称.git）
-      - PNPM_SOURCE=安装依赖时使用的PNPM源，默认设置为npmjs官方源，可自定义
+      - PNPM_SOURCE=安装依赖时使用的PNPM源，默认设置为npmjs官方源，可自定义；包管理器版本为pnpm 11.10.0
       - REPO_DOMAIN=存储库使用的域名（示例：github.com）
       - REPO_BRANCH=存储库的分支名称（示例：main）
       - KEY=存储库转义后的私钥
+      - HOST=Gateway监听地址，可选，默认0.0.0.0
+      - PORT=Gateway监听端口，可选，默认3000
     ports:
-      - "3000:3000" #默认gateway指定内部监听端口3000，若需修改则自己修改Surgio配置仓库中的gateway.js，并修改：后的端口号。
+      - "3000:3000" #默认gateway指定内部监听端口3000；若修改PORT，需同步修改：后的端口号。
     volumes:
       - "./surgio:/surgio" #默认映射文件夹的根目录下surgio文件夹为主目录
 ```

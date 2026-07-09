@@ -18,15 +18,15 @@ module.exports = {
     },
     {
       name: 'telegram', // 模板中对应 remoteSnippets.telegram
-      url: 'https://github.com/DivineEngine/Profiles/raw/master/Surge/Ruleset/Extra/Telegram/Telegram.list'
+      url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list'
     },
     {
       name: 'netflix', // 模板中对应 remoteSnippets.netflix
-      url: 'https://github.com/DivineEngine/Profiles/raw/master/Surge/Ruleset/StreamingMedia/Video/Netflix.list'
+      url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Netflix/Netflix.list'
     },
     {
       name: 'hbo', // 模板中对应 remoteSnippets.hbo
-      url: 'https://github.com/DivineEngine/Profiles/raw/master/Surge/Ruleset/StreamingMedia/Video/HBO.list'
+      url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/HBO/HBO.list'
     },
     {
       name: 'disney', // 模板中对应 remoteSnippets.disney
@@ -122,4 +122,3 @@ module.exports = {
   // 非常有限的报错信息收集
   analytics: true,
 };
-

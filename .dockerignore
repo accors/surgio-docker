@@ -1,0 +1,13 @@
+.git
+.github
+.DS_Store
+.vscode
+dist
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.worktrees
+worktrees
+AGENTS.md
