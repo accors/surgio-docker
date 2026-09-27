@@ -28,6 +28,12 @@ proxy-groups:
 - type: select
   name: 🎬 Netflix
   proxies: {{ getClashNodeNames(nodeList, netflixFilter) | json }}
+- type: select
+  name: 📺 YouTube
+  proxies:
+    - 🚀 Proxy
+    - US
+    - HK
 - type: url-test
   name: US
   proxies: {{ getClashNodeNames(nodeList, usFilter) | json }}
@@ -52,7 +58,7 @@ proxy-groups:
     - 🍎 Apple
 
 rules:
-{% filter quantumultx %}
+{% filter clash %}
 {{ remoteSnippets.apple.main('🚀 Proxy', '🍎 Apple', '🍎 Apple CDN', 'DIRECT', 'US') }}
 {{ remoteSnippets.netflix.main('🎬 Netflix') }}
 {{ remoteSnippets.hbo.main('🚀 Proxy') }}
