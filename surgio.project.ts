@@ -1,11 +1,12 @@
-'use strict';
-
-const { utils } = require('surgio');
+import { defineSurgioProject, utils, type SurgioNodeOptions } from 'surgio/project';
+import demo from './provider/demo.ts';
+import subscribeDemo from './provider/subscribe_demo.ts';
+import v2raySubscribeDemo from './provider/v2ray_subscribe_demo.ts';
 
 /**
  * 使用文档：https://surgio.js.org/
  */
-module.exports = {
+export default defineSurgioProject({
   /**
    * 远程片段
    * 文档：https://surgio.js.org/guide/custom-config.html#remotesnippets
@@ -39,6 +40,11 @@ module.exports = {
   ],
   customFilters: {
     hktFilter: utils.useKeywords(['hkt', 'HKT']),
+  },
+  providers: {
+    demo,
+    subscribe_demo: subscribeDemo,
+    v2ray_subscribe_demo: v2raySubscribeDemo,
   },
   artifacts: [
     /**
@@ -109,6 +115,11 @@ module.exports = {
    * 例如阿里云 OSS 的访问地址 https://xxx.oss-cn-hangzhou.aliyuncs.com/
    */
   urlBase: 'https://example.com/',
+  // 非常有限的报错信息收集
+  analytics: true,
+});
+
+export const nodeOptions = async (): Promise<SurgioNodeOptions> => ({
   upload: {
     // 默认保存至根目录，可以在此修改子目录名，以 / 结尾，默认为 /
     prefix: '/',
@@ -119,6 +130,4 @@ module.exports = {
     accessKeyId: 'YOUR_ACCESS_KEY_ID',
     accessKeySecret: 'YOUR_ACCESS_KEY_SECRET',
   },
-  // 非常有限的报错信息收集
-  analytics: true,
-};
+});

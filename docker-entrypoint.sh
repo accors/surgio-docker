@@ -45,8 +45,12 @@ if [ -f /surgio/diy.sh ]; then
         . /surgio/diy.sh
 fi
 pnpm install
-if [ ! -f /surgio/ecosystem.config.js ]; then
-        cp /root/ecosystem.config.js /surgio/ecosystem.config.js
+if [ ! -f /surgio/ecosystem.config.cjs ]; then
+        if [ -f /surgio/ecosystem.config.js ]; then
+                echo "Found legacy ecosystem.config.js. Rename and update it to ecosystem.config.cjs for the ESM project." >&2
+                exit 1
+        fi
+        cp /root/ecosystem.config.cjs /surgio/ecosystem.config.cjs
 fi
 . /root/env.sh
-pm2-runtime start ecosystem.config.js --env production
+pm2-runtime start ecosystem.config.cjs --env production

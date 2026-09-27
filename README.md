@@ -19,7 +19,7 @@ At startup, the main image:
 3. Configures pnpm, optionally sources `/surgio/diy.sh`, and installs the repository dependencies.
 4. Starts cron and runs the Surgio Gateway under PM2.
 
-The published `accors/surgio:latest` image supports `linux/amd64`, `linux/arm64/v8`, and `linux/arm/v7`. This repository also contains a separate Sub-Store image path based on `Sub.dockerfile` and `entrypoint.sh`; it is independent of the main Surgio image.
+The `main` branch continues to publish `accors/surgio:latest`. This `codex/v4-beta` branch builds `accors/surgio:v4-beta` for Surgio v4 projects; it does not publish `latest`. Both images target `linux/amd64`, `linux/arm64/v8`, and `linux/arm/v7`. This repository also contains a separate Sub-Store image path based on `Sub.dockerfile` and `entrypoint.sh`; it is independent of the main Surgio image.
 
 ### Prerequisites
 
@@ -28,14 +28,14 @@ The published `accors/surgio:latest` image supports `linux/amd64`, `linux/arm64/
 - Push your Surgio project to a private Git repository.
 - Create a restricted SSH deploy key that can read that repository, then escape its line breaks for the `KEY` environment variable.
 
-If needed, use this repository's [sample `gateway.js`](https://raw.githubusercontent.com/accors/surgio-docker/main/gateway.js) in the root of your Surgio project.
+For `v4-beta`, the private repository must contain a Surgio v4 project and an ESM `gateway.js`; if needed, use this branch's [sample `gateway.js`](https://raw.githubusercontent.com/accors/surgio-docker/codex/v4-beta/gateway.js). If you maintain a custom PM2 configuration, name it `ecosystem.config.cjs`, keep the application name `Gateway`, and update its script for the ESM Gateway. An existing `ecosystem.config.js` must be migrated before startup. When no PM2 configuration exists, the image copies its default `ecosystem.config.cjs` into `/surgio`.
 
 ### Quick start
 
 Pull the image:
 
 ```sh
-docker pull accors/surgio:latest
+docker pull accors/surgio:v4-beta
 ```
 
 Create and enter a working directory:
@@ -51,7 +51,7 @@ Create `docker-compose.yml`:
 version: "3.7"
 services:
   surgio:
-    image: accors/surgio:latest
+    image: accors/surgio:v4-beta
     container_name: surgio-docker
     restart: unless-stopped
     environment:
@@ -88,7 +88,7 @@ Restart the container after changing its environment or deployment configuration
 | `HOST` | No | `0.0.0.0` | Surgio Gateway listening address. |
 | `PORT` | No | `3000` | Surgio Gateway listening port. Update the container-side port mapping when changing it. |
 
-The image is based on Node.js 22 Alpine and activates pnpm 11.10.0 through Corepack.
+The image requires Node.js 22.22.2 or newer and activates pnpm 11.10.0 through Corepack. The private project must install Surgio v4 dependencies during container startup; `config/update` only pulls Git changes and restarts `Gateway`, so restart the container after upgrading dependencies.
 
 ### Custom startup commands
 
@@ -121,7 +121,7 @@ Issues and suggestions are welcome in the [GitHub issue tracker](https://github.
 3. 配置 pnpm，可选加载 `/surgio/diy.sh`，并安装仓库依赖。
 4. 启动 cron，再由 PM2 运行 Surgio Gateway。
 
-公开镜像 `accors/surgio:latest` 支持 `linux/amd64`、`linux/arm64/v8` 和 `linux/arm/v7`。本仓库还包含由 `Sub.dockerfile` 和 `entrypoint.sh` 构成的独立 Sub-Store 镜像链路；它不属于 Surgio 主镜像的启动流程。
+`main` 分支继续发布 `accors/surgio:latest`。当前 `codex/v4-beta` 分支为 Surgio v4 项目构建 `accors/surgio:v4-beta`，不会发布 `latest`。两条镜像线均以 `linux/amd64`、`linux/arm64/v8` 和 `linux/arm/v7` 为目标平台。本仓库还包含由 `Sub.dockerfile` 和 `entrypoint.sh` 构成的独立 Sub-Store 镜像链路；它不属于 Surgio 主镜像的启动流程。
 
 ### 使用前提
 
@@ -130,14 +130,14 @@ Issues and suggestions are welcome in the [GitHub issue tracker](https://github.
 - 将自己的 Surgio 项目推送到私有 Git 仓库。
 - 创建仅具有该仓库读取权限的 SSH deploy key，并将私钥换行转义后传入 `KEY` 环境变量。
 
-如有需要，可将本仓库的[示例 `gateway.js`](https://raw.githubusercontent.com/accors/surgio-docker/main/gateway.js)放入 Surgio 项目根目录。
+使用 `v4-beta` 时，私有仓库必须包含 Surgio v4 项目和 ESM 格式的 `gateway.js`；如有需要，可使用当前分支的[示例 `gateway.js`](https://raw.githubusercontent.com/accors/surgio-docker/codex/v4-beta/gateway.js)。若自行维护 PM2 配置，请将文件命名为 `ecosystem.config.cjs`，保留应用名 `Gateway`，并让脚本指向 ESM Gateway。现有 `ecosystem.config.js` 必须在启动前迁移。没有 PM2 配置时，镜像会把默认 `ecosystem.config.cjs` 复制到 `/surgio`。
 
 ### 快速开始
 
 拉取镜像：
 
 ```sh
-docker pull accors/surgio:latest
+docker pull accors/surgio:v4-beta
 ```
 
 创建并进入工作目录：
@@ -153,7 +153,7 @@ cd surgio-docker
 version: "3.7"
 services:
   surgio:
-    image: accors/surgio:latest
+    image: accors/surgio:v4-beta
     container_name: surgio-docker
     restart: unless-stopped
     environment:
@@ -190,7 +190,7 @@ docker compose up -d
 | `HOST` | 否 | `0.0.0.0` | Surgio Gateway 监听地址。 |
 | `PORT` | 否 | `3000` | Surgio Gateway 监听端口；修改后需同步调整端口映射的容器端口。 |
 
-镜像基于 Node.js 22 Alpine 构建，并通过 Corepack 激活 pnpm 11.10.0。
+镜像要求 Node.js 22.22.2 或更新版本，并通过 Corepack 激活 pnpm 11.10.0。私有项目的 Surgio v4 依赖会在容器启动时安装；`config/update` 仅拉取 Git 变更并重启 `Gateway`，升级依赖后应重启容器。
 
 ### 自定义启动命令
 

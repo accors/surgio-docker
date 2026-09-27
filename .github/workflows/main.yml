@@ -1,24 +1,21 @@
-name: Build surgio image and publish to dockerhub
+name: Build Surgio v4 beta image and publish to Docker Hub
 
 on:
-  release:
-    types: [published]
   push:
     branches:
-      - main
+      - codex/v4-beta
     paths:
       - Dockerfile
       - docker-entrypoint.sh
       - config/**
-      - ecosystem.config.js
+      - ecosystem.config.cjs
       - env.sh
       - .github/workflows/main.yml
   workflow_dispatch:
-  schedule:
-    - cron: 0 0 */15 * 5
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/codex/v4-beta'
     runs-on: ubuntu-latest
     name: Build Docker Image
     steps:
@@ -48,4 +45,4 @@ jobs:
             linux/arm/v7
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:v4-beta

@@ -1,6 +1,8 @@
 allowBuilds:
   '@nestjs/core': true
   yarn: true
+minimumReleaseAgeExclude:
+  - surgio@4.0.0-beta.6
 overrides:
   '@nestjs/common': 9.4.3
   typescript: 6.0.3
