@@ -1,6 +1,7 @@
 AGENTS.md
 .vscode/
 dist/
+docs/
 node_modules
 npm-debug.log*
 pnpm-debug.log*
