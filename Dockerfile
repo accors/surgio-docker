@@ -5,6 +5,7 @@ ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.lo
     PNPM_HOME="/root/.local/share/pnpm" \
     PNPM_SOURCE="https://registry.npmjs.org" \
     LANG=C.UTF-8 \
+    TZ=Asia/Shanghai \
     DEFAULT_CRON="0 0 * * *"
 COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./config/* /usr/local/bin/
