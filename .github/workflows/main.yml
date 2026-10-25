@@ -37,6 +37,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Compute Tags
+        id: meta
+        run: |
+          echo "date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+          echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
       - name: Build Image
         uses: docker/build-push-action@v7
         with:
@@ -49,3 +55,5 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/surgio:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:${{ steps.meta.outputs.date }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:sha-${{ steps.meta.outputs.sha }}

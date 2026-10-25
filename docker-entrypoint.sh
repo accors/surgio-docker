@@ -3,7 +3,6 @@ set -e
 
 : "${REPO_URL:?REPO_URL is required}"
 : "${REPO_DOMAIN:?REPO_DOMAIN is required}"
-: "${KEY:?KEY is required}"
 
 PNPM_SOURCE=${PNPM_SOURCE:-https://registry.npmjs.org}
 targetBranch=$1
@@ -14,7 +13,27 @@ if [ -z "$targetBranch" ]; then
     targetBranch="master"
 fi
 
-printf "%b" "$KEY" >/root/.ssh/id_rsa
+TZ=${TZ:-Asia/Shanghai}
+if [ ! -f "/usr/share/zoneinfo/$TZ" ]; then
+    echo "Unknown TZ '$TZ', falling back to Asia/Shanghai" >&2
+    TZ=Asia/Shanghai
+fi
+ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
+echo "$TZ" >/etc/timezone
+export TZ
+
+if [ -n "$KEY_FILE" ]; then
+    if [ ! -r "$KEY_FILE" ]; then
+        echo "KEY_FILE ($KEY_FILE) is not readable" >&2
+        exit 1
+    fi
+    cp "$KEY_FILE" /root/.ssh/id_rsa
+elif [ -n "$KEY" ]; then
+    printf "%b" "$KEY" >/root/.ssh/id_rsa
+else
+    echo "Either KEY or KEY_FILE is required" >&2
+    exit 1
+fi
 chmod 600 /root/.ssh/id_rsa
 
 cloneRepo() {
