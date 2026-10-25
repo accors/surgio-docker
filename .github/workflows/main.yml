@@ -42,6 +42,8 @@ jobs:
             artifact: arm64
             qemu: false
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -87,6 +89,7 @@ jobs:
     name: Publish Multi-Arch Manifest
     needs: build
     runs-on: ubuntu-24.04
+    permissions: {}
     steps:
       - name: Download Digests
         uses: actions/download-artifact@v8
