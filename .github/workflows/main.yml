@@ -13,16 +13,38 @@ on:
       - .github/workflows/main.yml
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  # Each platform group is built on the runner closest to it and pushed by
+  # digest only; the merge job then publishes one multi-arch manifest.
+  # arm64 builds natively on the ARM runner, so it no longer goes through QEMU.
   build:
     if: github.ref == 'refs/heads/codex/v4-beta'
-    runs-on: ubuntu-24.04-arm
-    name: Build Docker Image
+    name: Build ${{ matrix.name }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - name: amd64 + arm/v7
+            runner: ubuntu-24.04
+            platforms: linux/amd64,linux/arm/v7
+            artifact: amd64-armv7
+            qemu: true
+          - name: arm64
+            runner: ubuntu-24.04-arm
+            platforms: linux/arm64/v8
+            artifact: arm64
+            qemu: false
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
       - name: Set Up QEMU
+        if: matrix.qemu
         uses: docker/setup-qemu-action@v4
 
       - name: Set Up Buildx
@@ -34,15 +56,65 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build Image
+      - name: Build And Push By Digest
+        id: build
         uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Dockerfile
-          platforms: |
-            linux/amd64
-            linux/arm64/v8
-            linux/arm/v7
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/surgio:v4-beta
+          platforms: ${{ matrix.platforms }}
+          outputs: type=image,name=${{ secrets.DOCKERHUB_USERNAME }}/surgio,push-by-digest=true,name-canonical=true,push=true
+
+      - name: Export Digest
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
+
+      - name: Upload Digest
+        uses: actions/upload-artifact@v7
+        with:
+          name: digest-${{ matrix.artifact }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Publish Multi-Arch Manifest
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download Digests
+        uses: actions/download-artifact@v8
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digest-*
+          merge-multiple: true
+
+      - name: Set Up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login DockerHub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Create Manifest
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/surgio
+        run: |
+          date="$(date -u +%Y%m%d)"
+          sha="${GITHUB_SHA::7}"
+          docker buildx imagetools create \
+            -t "$IMAGE:v4-beta" \
+            -t "$IMAGE:v4-beta-$date" \
+            -t "$IMAGE:v4-beta-sha-$sha" \
+            $(printf "$IMAGE@sha256:%s " *)
+
+      - name: Inspect Manifest
+        env:
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/surgio
+        run: docker buildx imagetools inspect "$IMAGE:v4-beta"
