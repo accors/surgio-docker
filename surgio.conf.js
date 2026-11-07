@@ -119,6 +119,14 @@ module.exports = {
     accessKeyId: 'YOUR_ACCESS_KEY_ID',
     accessKeySecret: 'YOUR_ACCESS_KEY_SECRET',
   },
+  /**
+   * Gateway 认证：未设置 GATEWAY_TOKEN 时 Surgio 会拒绝加载配置
+   * 订阅链接需带上 ?access_token=<GATEWAY_TOKEN>
+   */
+  gateway: {
+    auth: true,
+    accessToken: process.env.GATEWAY_TOKEN,
+  },
   // 非常有限的报错信息收集
   analytics: true,
 };

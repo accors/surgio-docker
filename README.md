@@ -60,6 +60,7 @@ services:
       - REPO_DOMAIN=github.com
       - REPO_BRANCH=main
       - KEY=YOUR_ESCAPED_OPENSSH_PRIVATE_KEY
+      - GATEWAY_TOKEN=YOUR_RANDOM_TOKEN
       - HOST=0.0.0.0
       - PORT=3000
     ports:
@@ -88,6 +89,7 @@ Restart the container after changing its environment or deployment configuration
 | `KNOWN_HOSTS` | No | - | `known_hosts` lines for `REPO_DOMAIN`, with line breaks escaped like `KEY`. |
 | `KNOWN_HOSTS_FILE` | No | - | Path to a `known_hosts` file inside the container. Set at most one of `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. |
 | `PNPM_SOURCE` | No | `https://registry.npmjs.org` | pnpm registry used when installing dependencies. |
+| `GATEWAY_TOKEN` | Yes, with the sample config | - | Gateway access token read by the sample `surgio.conf.js`, which enables `gateway.auth`. Surgio refuses to load that config without it, including `surgio generate`. Only applies if your `surgio.conf.js` reads it. |
 | `HOST` | No | `0.0.0.0` | Surgio Gateway listening address. |
 | `PORT` | No | `3000` | Surgio Gateway listening port. Update the container-side port mapping when changing it. |
 | `TZ` | No | `Asia/Shanghai` | Container time zone; also decides when the daily update cron runs. |
@@ -107,7 +109,7 @@ If `/surgio/diy.sh` exists, the entrypoint sources it before installing dependen
 - SSH host keys come from `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. Without them, `github.com` uses GitHub's published host keys built into the image; any other `REPO_DOMAIN` falls back to `ssh-keyscan` with a warning, which trusts whatever key the host presents at startup. Set `KNOWN_HOSTS` for self-hosted Git servers.
 - Repository code, `diy.sh`, and package lifecycle scripts run as root inside the container. Treat the repository and its dependencies as trusted code.
 - Startup synchronization runs `git reset --hard origin/<branch>` in `/surgio`. Tracked local changes in the mounted directory can be overwritten.
-- The Gateway listens on `0.0.0.0:3000` by default. Configure Surgio authentication and appropriate network or reverse-proxy access controls before exposing it publicly.
+- The Gateway listens on `0.0.0.0:3000` by default. The sample `surgio.conf.js` enables Gateway authentication with `GATEWAY_TOKEN`; subscription URLs then need `?access_token=<GATEWAY_TOKEN>`. Use a long random token, for example from `openssl rand -hex 32`, and still apply appropriate network or reverse-proxy access controls before exposing it publicly.
 
 ### Acknowledgements
 
@@ -170,6 +172,7 @@ services:
       - REPO_DOMAIN=github.com
       - REPO_BRANCH=main
       - KEY=YOUR_ESCAPED_OPENSSH_PRIVATE_KEY
+      - GATEWAY_TOKEN=YOUR_RANDOM_TOKEN
       - HOST=0.0.0.0
       - PORT=3000
     ports:
@@ -198,6 +201,7 @@ docker compose up -d
 | `KNOWN_HOSTS` | 否 | - | `REPO_DOMAIN` 的 `known_hosts` 内容，换行转义方式与 `KEY` 相同。 |
 | `KNOWN_HOSTS_FILE` | 否 | - | 容器内 `known_hosts` 文件路径。`KNOWN_HOSTS` 与 `KNOWN_HOSTS_FILE` 最多设置其一。 |
 | `PNPM_SOURCE` | 否 | `https://registry.npmjs.org` | 安装依赖时使用的 pnpm registry。 |
+| `GATEWAY_TOKEN` | 使用示例配置时必填 | - | 示例 `surgio.conf.js` 读取的 Gateway 访问令牌，示例默认开启 `gateway.auth`。未设置时 Surgio 会拒绝加载该配置（包括 `surgio generate`）。仅在你的 `surgio.conf.js` 读取它时生效。 |
 | `HOST` | 否 | `0.0.0.0` | Surgio Gateway 监听地址。 |
 | `PORT` | 否 | `3000` | Surgio Gateway 监听端口；修改后需同步调整端口映射的容器端口。 |
 | `TZ` | 否 | `Asia/Shanghai` | 容器时区，同时决定每日更新任务的执行时间。 |
@@ -217,7 +221,7 @@ docker compose up -d
 - SSH 主机密钥来自 `KNOWN_HOSTS` 或 `KNOWN_HOSTS_FILE`。未设置时，`github.com` 使用镜像内置的 GitHub 官方主机密钥；其他 `REPO_DOMAIN` 回退到 `ssh-keyscan` 并打印警告，此时会信任主机在启动时提供的任意密钥。自建 Git 服务器建议设置 `KNOWN_HOSTS`。
 - 仓库代码、`diy.sh` 和依赖生命周期脚本会在容器内以 root 身份运行，应将仓库及其依赖视为可信代码。
 - 启动同步会在 `/surgio` 中执行 `git reset --hard origin/<branch>`，挂载目录中已跟踪但未提交的本地修改可能被覆盖。
-- Gateway 默认监听 `0.0.0.0:3000`。公开暴露前，请配置 Surgio 身份验证以及合适的网络或反向代理访问控制。
+- Gateway 默认监听 `0.0.0.0:3000`。示例 `surgio.conf.js` 通过 `GATEWAY_TOKEN` 开启 Gateway 身份验证，订阅链接需带上 `?access_token=<GATEWAY_TOKEN>`。请使用足够长的随机令牌（例如 `openssl rand -hex 32` 生成），公开暴露前仍应配置合适的网络或反向代理访问控制。
 
 ### 致谢
 
