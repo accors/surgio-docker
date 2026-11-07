@@ -1,8 +1,6 @@
 name: Build surgio image and publish to dockerhub
 
 on:
-  release:
-    types: [published]
   push:
     branches:
       - main
@@ -42,6 +40,8 @@ jobs:
             artifact: arm64
             qemu: false
     runs-on: ${{ matrix.runner }}
+    # Docker Hub credentials live in this environment, which only main may use.
+    environment: dockerhub
     permissions:
       contents: read
     steps:
@@ -89,6 +89,7 @@ jobs:
     name: Publish Multi-Arch Manifest
     needs: build
     runs-on: ubuntu-24.04
+    environment: dockerhub
     permissions: {}
     steps:
       - name: Download Digests
