@@ -10,8 +10,8 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@surgio/gateway": "^2.3.1",
-    "surgio": "^3.16.0"
+    "@surgio/gateway": "^2.4.1",
+    "surgio": "^3.19.0"
   },
   "devDependencies": {
     "typescript": "6.0.3"
