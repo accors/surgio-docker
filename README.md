@@ -66,10 +66,19 @@ services:
       - HOST=0.0.0.0
       - PORT=3000
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - "./surgio:/surgio"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
 ```
+
+The port is bound to `127.0.0.1`, so the Gateway is only reachable from this host, typically through a reverse proxy. Use `"3000:3000"` to expose it directly; Docker then publishes the port on every interface and bypasses host firewall rules such as ufw. The `cap_drop` / `cap_add` entries leave the container with only the two capabilities busybox crond needs; everything else has been verified to work without them.
 
 Start the container:
 
@@ -112,7 +121,8 @@ If `/surgio/diy.sh` exists, the entrypoint sources it before installing dependen
 - SSH host keys come from `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. Without them, `github.com` uses GitHub's published host keys built into the image; any other `REPO_DOMAIN` falls back to `ssh-keyscan` with a warning, which trusts whatever key the host presents at startup. Set `KNOWN_HOSTS` for self-hosted Git servers.
 - Repository code, `diy.sh`, and package lifecycle scripts run as root inside the container. Treat the repository and its dependencies as trusted code.
 - Startup synchronization runs `git reset --hard origin/<branch>` in `/surgio`. Tracked local changes in the mounted directory can be overwritten.
-- The Gateway listens on `0.0.0.0:3000` by default. The sample `surgio.conf.js` enables Gateway authentication with `GATEWAY_TOKEN`; subscription URLs then need `?access_token=<GATEWAY_TOKEN>`. Use a long random token, for example from `openssl rand -hex 32`, and still apply appropriate network or reverse-proxy access controls before exposing it publicly.
+- The Gateway listens on `0.0.0.0:3000` by default. The sample `surgio.conf.js` enables Gateway authentication with `GATEWAY_TOKEN`; subscription URLs then need `?access_token=<GATEWAY_TOKEN>`. Use a long random token, for example from `openssl rand -hex 32`, and still apply appropriate network or reverse-proxy access controls before exposing it publicly. Note that the token travels in the query string, so it appears in proxy access logs unless you configure them not to record it.
+- Scheduled `update` runs write their result to the container log (`docker logs`), so a failing pull, for example because the deploy key expired, is visible there.
 
 ### Acknowledgements
 
@@ -181,10 +191,19 @@ services:
       - HOST=0.0.0.0
       - PORT=3000
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - "./surgio:/surgio"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
 ```
+
+端口绑定在 `127.0.0.1`，Gateway 只能从本机访问，通常经由反向代理对外提供服务。如需直接暴露，可改为 `"3000:3000"`，但 Docker 会把端口发布到所有网卡，并绕过 ufw 等宿主机防火墙规则。`cap_drop` / `cap_add` 只保留 busybox crond 需要的两个 capability，其余功能已验证在此配置下正常工作。
 
 启动容器：
 
@@ -227,7 +246,8 @@ docker compose up -d
 - SSH 主机密钥来自 `KNOWN_HOSTS` 或 `KNOWN_HOSTS_FILE`。未设置时，`github.com` 使用镜像内置的 GitHub 官方主机密钥；其他 `REPO_DOMAIN` 回退到 `ssh-keyscan` 并打印警告，此时会信任主机在启动时提供的任意密钥。自建 Git 服务器建议设置 `KNOWN_HOSTS`。
 - 仓库代码、`diy.sh` 和依赖生命周期脚本会在容器内以 root 身份运行，应将仓库及其依赖视为可信代码。
 - 启动同步会在 `/surgio` 中执行 `git reset --hard origin/<branch>`，挂载目录中已跟踪但未提交的本地修改可能被覆盖。
-- Gateway 默认监听 `0.0.0.0:3000`。示例 `surgio.conf.js` 通过 `GATEWAY_TOKEN` 开启 Gateway 身份验证，订阅链接需带上 `?access_token=<GATEWAY_TOKEN>`。请使用足够长的随机令牌（例如 `openssl rand -hex 32` 生成），公开暴露前仍应配置合适的网络或反向代理访问控制。
+- Gateway 默认监听 `0.0.0.0:3000`。示例 `surgio.conf.js` 通过 `GATEWAY_TOKEN` 开启 Gateway 身份验证，订阅链接需带上 `?access_token=<GATEWAY_TOKEN>`。请使用足够长的随机令牌（例如 `openssl rand -hex 32` 生成），公开暴露前仍应配置合适的网络或反向代理访问控制。注意令牌位于查询字符串中，除非特意配置，否则会出现在反向代理的访问日志里。
+- 定时 `update` 的执行结果会写入容器日志（`docker logs`），拉取失败（例如 deploy key 过期）可以在那里看到。
 
 ### 致谢
 
