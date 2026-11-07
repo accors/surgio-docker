@@ -24,4 +24,4 @@ RUN set -ex \
         && printf "%s\n" "$DEFAULT_CRON update" > /var/spool/cron/crontabs/root \
         && chmod +x /usr/local/bin/* 
 WORKDIR /surgio
-CMD docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]

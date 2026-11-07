@@ -100,7 +100,8 @@ If `/surgio/diy.sh` exists, the entrypoint sources it before installing dependen
 
 ### Security and update behavior
 
-- The SSH key is provided through `KEY` or a mounted `KEY_FILE` and written to `/root/.ssh/id_rsa` inside the container. `KEY_FILE` avoids exposing the key in the container environment. Prefer a read-only, repository-scoped deploy key.
+- The SSH key is provided through `KEY` or a mounted `KEY_FILE` and written to `/root/.ssh/id_rsa` (mode `600`) inside the container. `KEY_FILE` avoids exposing the key in the container environment. `KEY` is unset after it is written, so `diy.sh`, dependency scripts, and the Gateway do not inherit it. Prefer a read-only, repository-scoped deploy key.
+- `REPO_URL`, `REPO_DOMAIN`, `REPO_BRANCH`, and `PNPM_SOURCE` must not start with `-`, and the branch must be a valid Git branch name. Avoid embedding credentials in `REPO_URL`, as Git error messages may print the URL.
 - Repository code, `diy.sh`, and package lifecycle scripts run as root inside the container. Treat the repository and its dependencies as trusted code.
 - Startup synchronization runs `git reset --hard origin/<branch>` in `/surgio`. Tracked local changes in the mounted directory can be overwritten.
 - The Gateway listens on `0.0.0.0:3000` by default. Configure Surgio authentication and appropriate network or reverse-proxy access controls before exposing it publicly.
@@ -206,7 +207,8 @@ docker compose up -d
 
 ### 安全与更新行为
 
-- SSH 私钥通过 `KEY` 或挂载的 `KEY_FILE` 传入，并写入容器内的 `/root/.ssh/id_rsa`。使用 `KEY_FILE` 可避免私钥暴露在容器环境变量中。建议使用只读、仅限目标仓库的 deploy key。
+- SSH 私钥通过 `KEY` 或挂载的 `KEY_FILE` 传入，并写入容器内的 `/root/.ssh/id_rsa`（权限 `600`）。使用 `KEY_FILE` 可避免私钥暴露在容器环境变量中。`KEY` 写入后会被 unset，`diy.sh`、依赖脚本和 Gateway 不会继承它。建议使用只读、仅限目标仓库的 deploy key。
+- `REPO_URL`、`REPO_DOMAIN`、`REPO_BRANCH` 和 `PNPM_SOURCE` 不能以 `-` 开头，分支名必须是合法的 Git 分支名。不要在 `REPO_URL` 中嵌入凭据，Git 报错信息可能会打印该 URL。
 - 仓库代码、`diy.sh` 和依赖生命周期脚本会在容器内以 root 身份运行，应将仓库及其依赖视为可信代码。
 - 启动同步会在 `/surgio` 中执行 `git reset --hard origin/<branch>`，挂载目录中已跟踪但未提交的本地修改可能被覆盖。
 - Gateway 默认监听 `0.0.0.0:3000`。公开暴露前，请配置 Surgio 身份验证以及合适的网络或反向代理访问控制。
