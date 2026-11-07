@@ -19,7 +19,7 @@ At startup, the main image:
 3. Configures pnpm, optionally sources `/surgio/diy.sh`, and installs the repository dependencies.
 4. Starts cron and runs the Surgio Gateway under PM2.
 
-The published `accors/surgio:latest` image supports `linux/amd64`, `linux/arm64/v8`, and `linux/arm/v7`. This repository also contains a separate Sub-Store image path based on `Sub.dockerfile` and `entrypoint.sh`; it is independent of the main Surgio image.
+The published `accors/surgio:latest` image supports `linux/amd64`, `linux/arm64/v8`, and `linux/arm/v7`.
 
 ### Prerequisites
 
@@ -125,7 +125,7 @@ Issues and suggestions are welcome in the [GitHub issue tracker](https://github.
 3. 配置 pnpm，可选加载 `/surgio/diy.sh`，并安装仓库依赖。
 4. 启动 cron，再由 PM2 运行 Surgio Gateway。
 
-公开镜像 `accors/surgio:latest` 支持 `linux/amd64`、`linux/arm64/v8` 和 `linux/arm/v7`。本仓库还包含由 `Sub.dockerfile` 和 `entrypoint.sh` 构成的独立 Sub-Store 镜像链路；它不属于 Surgio 主镜像的启动流程。
+公开镜像 `accors/surgio:latest` 支持 `linux/amd64`、`linux/arm64/v8` 和 `linux/arm/v7`。
 
 ### 使用前提
 

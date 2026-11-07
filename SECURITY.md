@@ -30,13 +30,13 @@ anonymity is requested.
 ## Scope
 
 In scope:
-- `Dockerfile`, `Sub.dockerfile`, and entrypoint/startup scripts
+- `Dockerfile` and `docker-entrypoint.sh`
 - The sample `gateway.js` and image build/publish workflows
 - Handling of the SSH deploy key inside the container
 
 Out of scope (please report upstream):
 - [Surgio](https://github.com/surgioproject/surgio) itself
-- Sub-Store and other third-party dependencies
+- Other third-party dependencies
 
 See the README section "Security and update behavior" for known
 design trade-offs (e.g. code running as root inside the container).
