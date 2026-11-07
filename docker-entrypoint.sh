@@ -85,8 +85,30 @@ cloneRepo() {
     fi
 }
 
-ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts ||
-    die "ssh-keyscan failed for REPO_DOMAIN=$REPO_DOMAIN"
+# GitHub 官方公布的 SSH 主机密钥：https://api.github.com/meta
+writeGithubKnownHosts() {
+    cat >/root/.ssh/known_hosts <<'EOF'
+github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=
+EOF
+}
+
+if [ -n "$KNOWN_HOSTS" ] && [ -n "$KNOWN_HOSTS_FILE" ]; then
+    die "Set only one of KNOWN_HOSTS or KNOWN_HOSTS_FILE"
+fi
+if [ -n "$KNOWN_HOSTS_FILE" ]; then
+    [ -r "$KNOWN_HOSTS_FILE" ] || die "KNOWN_HOSTS_FILE is not readable: $KNOWN_HOSTS_FILE"
+    cat -- "$KNOWN_HOSTS_FILE" >/root/.ssh/known_hosts
+elif [ -n "$KNOWN_HOSTS" ]; then
+    printf "%b\n" "$KNOWN_HOSTS" >/root/.ssh/known_hosts
+elif [ "$REPO_DOMAIN" = "github.com" ]; then
+    writeGithubKnownHosts
+else
+    echo "WARNING: KNOWN_HOSTS/KNOWN_HOSTS_FILE not set; trusting host keys from ssh-keyscan $REPO_DOMAIN (TOFU)" >&2
+    ssh-keyscan "$REPO_DOMAIN" >/root/.ssh/known_hosts ||
+        die "ssh-keyscan failed for REPO_DOMAIN=$REPO_DOMAIN"
+fi
 cloneRepo surgio "$REPO_URL" "$targetBranch"
 pnpm config set registry "$PNPM_SOURCE"
 crond

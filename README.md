@@ -85,6 +85,8 @@ Restart the container after changing its environment or deployment configuration
 | `KEY` | Yes* | - | Escaped OpenSSH private key used to read the repository. *Not needed when `KEY_FILE` is set. |
 | `KEY_FILE` | No | - | Path to a mounted private key file (for example a Docker secret). Takes precedence over `KEY` and keeps the key out of `docker inspect`. |
 | `REPO_BRANCH` | No | `master` | Branch checked out and synchronized at startup. |
+| `KNOWN_HOSTS` | No | - | `known_hosts` lines for `REPO_DOMAIN`, with line breaks escaped like `KEY`. |
+| `KNOWN_HOSTS_FILE` | No | - | Path to a `known_hosts` file inside the container. Set at most one of `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. |
 | `PNPM_SOURCE` | No | `https://registry.npmjs.org` | pnpm registry used when installing dependencies. |
 | `HOST` | No | `0.0.0.0` | Surgio Gateway listening address. |
 | `PORT` | No | `3000` | Surgio Gateway listening port. Update the container-side port mapping when changing it. |
@@ -102,6 +104,7 @@ If `/surgio/diy.sh` exists, the entrypoint sources it before installing dependen
 
 - The SSH key is provided through `KEY` or a mounted `KEY_FILE` and written to `/root/.ssh/id_rsa` (mode `600`) inside the container. `KEY_FILE` avoids exposing the key in the container environment. `KEY` is unset after it is written, so `diy.sh`, dependency scripts, and the Gateway do not inherit it. Prefer a read-only, repository-scoped deploy key.
 - `REPO_URL`, `REPO_DOMAIN`, `REPO_BRANCH`, and `PNPM_SOURCE` must not start with `-`, and the branch must be a valid Git branch name. Avoid embedding credentials in `REPO_URL`, as Git error messages may print the URL.
+- SSH host keys come from `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. Without them, `github.com` uses GitHub's published host keys built into the image; any other `REPO_DOMAIN` falls back to `ssh-keyscan` with a warning, which trusts whatever key the host presents at startup. Set `KNOWN_HOSTS` for self-hosted Git servers.
 - Repository code, `diy.sh`, and package lifecycle scripts run as root inside the container. Treat the repository and its dependencies as trusted code.
 - Startup synchronization runs `git reset --hard origin/<branch>` in `/surgio`. Tracked local changes in the mounted directory can be overwritten.
 - The Gateway listens on `0.0.0.0:3000` by default. Configure Surgio authentication and appropriate network or reverse-proxy access controls before exposing it publicly.
@@ -192,6 +195,8 @@ docker compose up -d
 | `KEY` | 是* | - | 用于读取仓库、已转义换行的 OpenSSH 私钥。*设置了 `KEY_FILE` 时可不填。 |
 | `KEY_FILE` | 否 | - | 挂载进容器的私钥文件路径（如 Docker secret）。优先于 `KEY`，私钥不会出现在 `docker inspect` 中。 |
 | `REPO_BRANCH` | 否 | `master` | 容器启动时检出并同步的分支。 |
+| `KNOWN_HOSTS` | 否 | - | `REPO_DOMAIN` 的 `known_hosts` 内容，换行转义方式与 `KEY` 相同。 |
+| `KNOWN_HOSTS_FILE` | 否 | - | 容器内 `known_hosts` 文件路径。`KNOWN_HOSTS` 与 `KNOWN_HOSTS_FILE` 最多设置其一。 |
 | `PNPM_SOURCE` | 否 | `https://registry.npmjs.org` | 安装依赖时使用的 pnpm registry。 |
 | `HOST` | 否 | `0.0.0.0` | Surgio Gateway 监听地址。 |
 | `PORT` | 否 | `3000` | Surgio Gateway 监听端口；修改后需同步调整端口映射的容器端口。 |
@@ -209,6 +214,7 @@ docker compose up -d
 
 - SSH 私钥通过 `KEY` 或挂载的 `KEY_FILE` 传入，并写入容器内的 `/root/.ssh/id_rsa`（权限 `600`）。使用 `KEY_FILE` 可避免私钥暴露在容器环境变量中。`KEY` 写入后会被 unset，`diy.sh`、依赖脚本和 Gateway 不会继承它。建议使用只读、仅限目标仓库的 deploy key。
 - `REPO_URL`、`REPO_DOMAIN`、`REPO_BRANCH` 和 `PNPM_SOURCE` 不能以 `-` 开头，分支名必须是合法的 Git 分支名。不要在 `REPO_URL` 中嵌入凭据，Git 报错信息可能会打印该 URL。
+- SSH 主机密钥来自 `KNOWN_HOSTS` 或 `KNOWN_HOSTS_FILE`。未设置时，`github.com` 使用镜像内置的 GitHub 官方主机密钥；其他 `REPO_DOMAIN` 回退到 `ssh-keyscan` 并打印警告，此时会信任主机在启动时提供的任意密钥。自建 Git 服务器建议设置 `KNOWN_HOSTS`。
 - 仓库代码、`diy.sh` 和依赖生命周期脚本会在容器内以 root 身份运行，应将仓库及其依赖视为可信代码。
 - 启动同步会在 `/surgio` 中执行 `git reset --hard origin/<branch>`，挂载目录中已跟踪但未提交的本地修改可能被覆盖。
 - Gateway 默认监听 `0.0.0.0:3000`。公开暴露前，请配置 Surgio 身份验证以及合适的网络或反向代理访问控制。
