@@ -127,4 +127,4 @@ if [ ! -f /surgio/ecosystem.config.js ]; then
         cp /root/ecosystem.config.js /surgio/ecosystem.config.js
 fi
 . /root/env.sh
-pm2-runtime start ecosystem.config.js --env production
+exec pm2-runtime start ecosystem.config.js --env production
