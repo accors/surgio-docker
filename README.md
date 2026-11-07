@@ -97,7 +97,7 @@ Restart the container after changing its environment or deployment configuration
 | `PORT` | No | `3000` | Surgio Gateway listening port. Update the container-side port mapping when changing it. |
 | `TZ` | No | `Asia/Shanghai` | Container time zone; also decides when the daily update cron runs. |
 
-The image is based on Node.js 22 Alpine and activates pnpm 11.10.0 through Corepack.
+The image is based on Node.js 22 Alpine and activates pnpm 11.28.9 through Corepack.
 
 Besides `latest`, every build is also tagged by UTC date (`YYYYMMDD`) and commit (`sha-<7 chars>`), so you can pin or roll back to a known image.
 
@@ -212,7 +212,7 @@ docker compose up -d
 | `PORT` | 否 | `3000` | Surgio Gateway 监听端口；修改后需同步调整端口映射的容器端口。 |
 | `TZ` | 否 | `Asia/Shanghai` | 容器时区，同时决定每日更新任务的执行时间。 |
 
-镜像基于 Node.js 22 Alpine 构建，并通过 Corepack 激活 pnpm 11.10.0。
+镜像基于 Node.js 22 Alpine 构建，并通过 Corepack 激活 pnpm 11.28.9。
 
 除 `latest` 外，每次构建还会打上 UTC 日期（`YYYYMMDD`）和提交（`sha-<7 位>`）标签，便于固定版本或回滚。
 

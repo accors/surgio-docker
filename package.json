@@ -2,7 +2,7 @@
   "name": "surgio-docker",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.10.0",
+  "packageManager": "pnpm@11.28.9",
   "scripts": {
     "update": "surgio generate && surgio upload"
   },

@@ -14,7 +14,7 @@ COPY ./ecosystem.config.js /root
 RUN set -ex \
         && mkdir -p /root/.ssh \
         && corepack enable \
-        && corepack prepare pnpm@11.10.0 --activate \
+        && corepack prepare pnpm@11.28.9 --activate \
         && apk update -f \
         && apk add --no-cache bash tzdata git moreutils curl jq openssh-client \
         && echo "Asia/Shanghai" > /etc/timezone \
