@@ -13,7 +13,8 @@ module.exports = {
   remoteSnippets: [
     {
       name: 'apple', // 模板中对应 remoteSnippets.apple
-      url: 'https://github.com/geekdada/surge-list/raw/master/surgio-snippet/apple.tpl',
+      // surgioSnippet 会作为模板执行，等同于代码；固定到 commit 以免上游仓库变更直接影响运行环境
+      url: 'https://github.com/geekdada/surge-list/raw/de12f6a729d18906f4397d3e7bfb529de34c477a/surgio-snippet/apple.tpl',
       surgioSnippet: true
     },
     {
