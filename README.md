@@ -90,6 +90,7 @@ Restart the container after changing its environment or deployment configuration
 | `KNOWN_HOSTS_FILE` | No | - | Path to a `known_hosts` file inside the container. Set at most one of `KNOWN_HOSTS` or `KNOWN_HOSTS_FILE`. |
 | `PNPM_SOURCE` | No | `https://registry.npmjs.org` | pnpm registry used when installing dependencies. |
 | `GATEWAY_TOKEN` | Yes, with the sample config | - | Gateway access token read by the sample `surgio.conf.js`, which enables `gateway.auth`. Surgio refuses to load that config without it, including `surgio generate`. Only applies if your `surgio.conf.js` reads it. |
+| `DEFAULT_CRON` | No | `0 0 * * *` | Cron schedule for running `update` (pull the repository and restart the Gateway). Applied at each container start. |
 | `HOST` | No | `0.0.0.0` | Surgio Gateway listening address. |
 | `PORT` | No | `3000` | Surgio Gateway listening port. Update the container-side port mapping when changing it. |
 | `TZ` | No | `Asia/Shanghai` | Container time zone; also decides when the daily update cron runs. |
@@ -202,6 +203,7 @@ docker compose up -d
 | `KNOWN_HOSTS_FILE` | 否 | - | 容器内 `known_hosts` 文件路径。`KNOWN_HOSTS` 与 `KNOWN_HOSTS_FILE` 最多设置其一。 |
 | `PNPM_SOURCE` | 否 | `https://registry.npmjs.org` | 安装依赖时使用的 pnpm registry。 |
 | `GATEWAY_TOKEN` | 使用示例配置时必填 | - | 示例 `surgio.conf.js` 读取的 Gateway 访问令牌，示例默认开启 `gateway.auth`。未设置时 Surgio 会拒绝加载该配置（包括 `surgio generate`）。仅在你的 `surgio.conf.js` 读取它时生效。 |
+| `DEFAULT_CRON` | 否 | `0 0 * * *` | 执行 `update`（拉取仓库并重启 Gateway）的 cron 表达式，每次容器启动时生效。 |
 | `HOST` | 否 | `0.0.0.0` | Surgio Gateway 监听地址。 |
 | `PORT` | 否 | `3000` | Surgio Gateway 监听端口；修改后需同步调整端口映射的容器端口。 |
 | `TZ` | 否 | `Asia/Shanghai` | 容器时区，同时决定每日更新任务的执行时间。 |

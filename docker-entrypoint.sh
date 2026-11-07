@@ -111,6 +111,13 @@ else
 fi
 cloneRepo surgio "$REPO_URL" "$targetBranch"
 pnpm config set registry "$PNPM_SOURCE"
+# 启动时根据 DEFAULT_CRON 生成定时更新任务，使运行时设置生效
+DEFAULT_CRON=${DEFAULT_CRON:-0 0 * * *}
+case "$DEFAULT_CRON" in
+    *"
+"*) die "DEFAULT_CRON must be a single line" ;;
+esac
+printf "%s update\n" "$DEFAULT_CRON" >/var/spool/cron/crontabs/root
 crond
 if [ -f /surgio/diy.sh ]; then
         . /surgio/diy.sh

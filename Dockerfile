@@ -21,7 +21,6 @@ RUN set -ex \
         && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
         && pnpm add -g pm2 \
         && rm -rf /var/cache/apk/* \
-        && printf "%s\n" "$DEFAULT_CRON update" > /var/spool/cron/crontabs/root \
         && chmod +x /usr/local/bin/* 
 WORKDIR /surgio
 ENTRYPOINT ["docker-entrypoint.sh"]

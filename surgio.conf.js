@@ -128,5 +128,5 @@ module.exports = {
     accessToken: process.env.GATEWAY_TOKEN,
   },
   // 非常有限的报错信息收集
-  analytics: true,
+  analytics: false,
 };
