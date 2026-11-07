@@ -9,6 +9,10 @@ Only the latest published image is supported with security fixes.
 | `accors/surgio:latest` | ✅        |
 | Older tags / images    | ❌        |
 
+The `linux/arm/v7` variant is supported only until 2027-04-30, when
+Node.js 22 reaches end of life. Official Node.js 24 and later images do
+not provide armv7, so it will be dropped from new images after that date.
+
 ## Reporting a Vulnerability
 
 Please **do not** report security issues through public GitHub issues.

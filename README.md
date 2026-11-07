@@ -21,6 +21,8 @@ At startup, the main image:
 
 The published `accors/surgio:latest` image supports `linux/amd64`, `linux/arm64/v8`, and `linux/arm/v7`.
 
+> **`linux/arm/v7` support ends on 2027-04-30.** The image is based on Node.js 22, which reaches end of life on that date, and the official Node.js 24 and later images no longer provide armv7. After that date, new images will be published only for `linux/amd64` and `linux/arm64/v8`. If you still depend on armv7, please comment in the [GitHub issue tracker](https://github.com/accors/surgio-docker/issues).
+
 ### Prerequisites
 
 - Read the [Surgio API Gateway deployment guide](https://surgio.js.org/guide/advance/api-gateway.html#%E8%87%AA%E6%9C%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2) and prepare a valid Surgio project.
@@ -133,6 +135,8 @@ Issues and suggestions are welcome in the [GitHub issue tracker](https://github.
 4. 启动 cron，再由 PM2 运行 Surgio Gateway。
 
 公开镜像 `accors/surgio:latest` 支持 `linux/amd64`、`linux/arm64/v8` 和 `linux/arm/v7`。
+
+> **`linux/arm/v7` 的支持将于 2027-04-30 结束。** 镜像基于 Node.js 22，该版本在这一天结束支持；而 Node.js 24 及之后的官方镜像已不再提供 armv7。此后发布的新镜像只包含 `linux/amd64` 和 `linux/arm64/v8`。如果你仍依赖 armv7，欢迎在 [GitHub Issues](https://github.com/accors/surgio-docker/issues) 反馈。
 
 ### 使用前提
 
