@@ -123,8 +123,15 @@ if [ -f /surgio/diy.sh ]; then
         . /surgio/diy.sh
 fi
 pnpm install
-if [ ! -f /surgio/ecosystem.config.js ]; then
-        cp /root/ecosystem.config.js /surgio/ecosystem.config.js
+# .cjs 在 CommonJS (Surgio v3) 和 ESM (Surgio v4) 仓库中都能加载；
+# 仍沿用仓库内已有的 ecosystem.config.js，避免打断 v3 用户
+if [ -f /surgio/ecosystem.config.cjs ]; then
+        ecosystemFile=ecosystem.config.cjs
+elif [ -f /surgio/ecosystem.config.js ]; then
+        ecosystemFile=ecosystem.config.js
+else
+        cp /root/ecosystem.config.cjs /surgio/ecosystem.config.cjs
+        ecosystemFile=ecosystem.config.cjs
 fi
 . /root/env.sh
-exec pm2-runtime start ecosystem.config.js --env production
+exec pm2-runtime start "$ecosystemFile" --env production

@@ -1,11 +1,12 @@
-'use strict';
-
-const { utils } = require('surgio');
+import { defineSurgioProject, utils, type SurgioNodeOptions } from 'surgio/project';
+import demo from './provider/demo.ts';
+import subscribeDemo from './provider/subscribe_demo.ts';
+import v2raySubscribeDemo from './provider/v2ray_subscribe_demo.ts';
 
 /**
  * 使用文档：https://surgio.js.org/
  */
-module.exports = {
+export default defineSurgioProject({
   /**
    * 远程片段
    * 文档：https://surgio.js.org/guide/custom-config.html#remotesnippets
@@ -40,6 +41,12 @@ module.exports = {
   ],
   customFilters: {
     hktFilter: utils.useKeywords(['hkt', 'HKT']),
+  },
+  // v4 不再扫描 provider/ 目录，Provider 必须在此显式注册
+  providers: {
+    demo,
+    subscribe_demo: subscribeDemo,
+    v2ray_subscribe_demo: v2raySubscribeDemo,
   },
   artifacts: [
     /**
@@ -110,16 +117,6 @@ module.exports = {
    * 例如阿里云 OSS 的访问地址 https://xxx.oss-cn-hangzhou.aliyuncs.com/
    */
   urlBase: 'https://example.com/',
-  upload: {
-    // 默认保存至根目录，可以在此修改子目录名，以 / 结尾，默认为 /
-    prefix: '/',
-    bucket: 'surgio-store',
-    // 支持所有区域
-    region: 'oss-cn-hangzhou',
-    // 以下信息于阿里云控制台获得
-    accessKeyId: 'YOUR_ACCESS_KEY_ID',
-    accessKeySecret: 'YOUR_ACCESS_KEY_SECRET',
-  },
   /**
    * Gateway 认证：未设置 GATEWAY_TOKEN 时 Surgio 会拒绝加载配置
    * 订阅链接需带上 ?access_token=<GATEWAY_TOKEN>
@@ -130,4 +127,19 @@ module.exports = {
   },
   // 非常有限的报错信息收集
   analytics: false,
-};
+});
+
+// 仅 Node 环境（CLI 与 Gateway）使用的选项
+export const nodeOptions = async (): Promise<SurgioNodeOptions> => ({
+  upload: {
+    backend: 'oss',
+    // 默认保存至根目录，可以在此修改子目录名，以 / 结尾，默认为 /
+    prefix: '/',
+    bucket: 'surgio-store',
+    // 支持所有区域
+    region: 'oss-cn-hangzhou',
+    // 以下信息于阿里云控制台获得
+    accessKeyId: 'YOUR_ACCESS_KEY_ID',
+    accessKeySecret: 'YOUR_ACCESS_KEY_SECRET',
+  },
+});

@@ -1,6 +1,6 @@
 FROM node:22-alpine
 LABEL AUTHOR="accors" \
-      VERSION=3.0
+      VERSION=4.0
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm:/root/.local/share/pnpm/bin" \
     PNPM_HOME="/root/.local/share/pnpm" \
     PNPM_SOURCE="https://registry.npmjs.org" \
@@ -10,7 +10,7 @@ ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.lo
 COPY ./docker-entrypoint.sh /usr/local/bin
 COPY ./config/* /usr/local/bin/
 COPY ./env.sh /root
-COPY ./ecosystem.config.js /root
+COPY ./ecosystem.config.cjs /root
 RUN set -ex \
         && mkdir -p /root/.ssh \
         && corepack enable \
