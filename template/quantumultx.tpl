@@ -9,8 +9,8 @@ server=114.114.114.114
 server=119.29.29.29
 
 [server_remote]
-{{ getDownloadUrl('Quantumult_subscribe_us.conf') }}, tag=🇺🇸 US
-{{ getDownloadUrl('Quantumult_subscribe_hk.conf') }}, tag=🇭🇰 HK
+{{ getDownloadUrl('QuantumultX_subscribe_us.conf') }}, tag=🇺🇸 US
+{{ getDownloadUrl('QuantumultX_subscribe_hk.conf') }}, tag=🇭🇰 HK
 
 [policy]
 available=🇺🇸 Auto US, {{ getNodeNames(nodeList, usFilter) }}

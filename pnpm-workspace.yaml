@@ -1,10 +1,9 @@
-allowBuilds:
-  '@nestjs/core': true
-  yarn: true
+minimumReleaseAgeExclude:
+  - '@surgio/eslint-config-surgio@3.0.0'
+  - '@surgio/gateway-frontend@2.6.1'
+  - '@surgio/gateway@3.0.0'
+  - '@surgio/logger@2.0.0'
+  - surgio@4.0.0
 overrides:
-  '@nestjs/common': 9.4.3
   typescript: 6.0.3
-  express: ^4.22.3
-  body-parser: ^1.20.9
   lodash: ^4.17.24
-  'path-to-regexp@3': 3.3.0

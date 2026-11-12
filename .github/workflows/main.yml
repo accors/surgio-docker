@@ -8,7 +8,7 @@ on:
       - Dockerfile
       - docker-entrypoint.sh
       - config/**
-      - ecosystem.config.js
+      - ecosystem.config.cjs
       - env.sh
       - .github/workflows/main.yml
   workflow_dispatch:
