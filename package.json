@@ -16,7 +16,7 @@
     "surgio": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.6.6",
     "typescript": "6.0.3"
   }
 }
