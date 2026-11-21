@@ -12,7 +12,7 @@
     "node": ">=22.22.2"
   },
   "dependencies": {
-    "@surgio/gateway": "^3.0.0",
+    "@surgio/gateway": "^3.0.2",
     "surgio": "^4.0.0"
   },
   "devDependencies": {

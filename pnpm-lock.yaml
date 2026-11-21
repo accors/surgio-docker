@@ -13,8 +13,8 @@ importers:
   .:
     dependencies:
       '@surgio/gateway':
-        specifier: ^3.0.0
-        version: 3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))
+        specifier: ^3.0.2
+        version: 3.0.2(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))
       surgio:
         specifier: ^4.0.0
         version: 4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3)
@@ -304,12 +304,12 @@ packages:
     peerDependencies:
       eslint: '>=10.0.0'
 
-  '@surgio/gateway-frontend@2.6.1':
-    resolution: {integrity: sha512-lqFIw3qtCiKaRZDnQh8D21aVubg+/knM2875xYqdk+cZw22mkCiQkeMI/qdd5uzj7BZFY8DL5xAneB2d6KdSTw==}
+  '@surgio/gateway-frontend@2.6.3':
+    resolution: {integrity: sha512-SoOpHhf0FqS2174b+g+WflQif1rQ80ZICvVpOpNmPjoCGMLlmg/jtAc80Fat0AajPwQcObe/7diiMD+bbgu6VQ==}
     engines: {node: '>=22.22.2'}
 
-  '@surgio/gateway@3.0.0':
-    resolution: {integrity: sha512-XMEgcZUDXLa3LmW5jV0lyjBcnJfQZ35mCFSbozOfCsRdw8eGuQ6uFa+SnCSCMzGIDM55KEq/D2HknUs2Ddvv9A==}
+  '@surgio/gateway@3.0.2':
+    resolution: {integrity: sha512-9p3D/3/rmCDBbciTpl4j7g8imbaRtQ9eH4mrAslG/4iZkNTNMsPXtUN+ycIuvmEnd7+jAJd9p8kj/No27t4YhQ==}
     engines: {node: '>=22.22.2'}
     peerDependencies:
       surgio: ^4.0.0-beta.9
@@ -1804,17 +1804,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@surgio/gateway-frontend@2.6.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)':
+  '@surgio/gateway-frontend@2.6.3(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       axios: 1.21.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@surgio/gateway@3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))':
+  '@surgio/gateway@3.0.2(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       '@hono/node-server': 2.1.6(hono@4.13.17)
-      '@surgio/gateway-frontend': 2.6.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@surgio/gateway-frontend': 2.6.3(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       '@surgio/logger': 2.0.0
       date-fns: 4.4.0
       filesize: 11.0.30
