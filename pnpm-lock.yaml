@@ -14,10 +14,10 @@ importers:
     dependencies:
       '@surgio/gateway':
         specifier: ^3.0.0
-        version: 3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))
+        version: 3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.1.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))
       surgio:
-        specifier: ^4.0.0
-        version: 4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^4.1.0
+        version: 4.1.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3)
     devDependencies:
       '@types/node':
         specifier: ^22.0.0
@@ -1381,8 +1381,8 @@ packages:
     resolution: {integrity: sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==}
     engines: {node: '>=10'}
 
-  surgio@4.0.0:
-    resolution: {integrity: sha512-LrQRuG3Xs8zmYhJUqCs/3Cs/1G3LVGpCcCQSja7R0vZMEany1VCnjhjXnPvSIP5cRLHefj+tHVdAPvqMJn7SSA==}
+  surgio@4.1.0:
+    resolution: {integrity: sha512-dBOoFGtbZZsWhxmciObBimBuqmXL3NJgVoofZiNujKms45YiJW3f1DEdv2uHWEbcwbVyk9sLSXZeGLpNy1rpDw==}
     engines: {node: '>=22.22.2'}
     hasBin: true
 
@@ -1811,7 +1811,7 @@ snapshots:
       - debug
       - supports-color
 
-  '@surgio/gateway@3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))':
+  '@surgio/gateway@3.0.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(surgio@4.1.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3))':
     dependencies:
       '@hono/node-server': 2.1.6(hono@4.13.17)
       '@surgio/gateway-frontend': 2.6.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
@@ -1819,7 +1819,7 @@ snapshots:
       date-fns: 4.4.0
       filesize: 11.0.30
       hono: 4.13.17
-      surgio: 4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3)
+      surgio: 4.1.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -2859,7 +2859,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
-  surgio@4.0.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3):
+  surgio@4.1.0(@types/node@22.20.5)(supports-color@8.1.1)(typescript@6.0.3):
     dependencies:
       '@brillout/import': 0.2.6
       '@keyv/serialize': 1.1.1

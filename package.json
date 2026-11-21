@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@surgio/gateway": "^3.0.0",
-    "surgio": "^4.0.0"
+    "surgio": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
